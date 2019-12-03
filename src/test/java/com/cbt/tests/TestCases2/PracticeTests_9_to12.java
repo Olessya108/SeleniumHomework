@@ -13,7 +13,7 @@ public class PracticeTests_9_to12 {
         WebDriver driver;
 
         @BeforeMethod
-        public void StartUp() throws InterruptedException {
+   void StartUp() throws InterruptedException {
             this.driver = BrowserFactory.getDriver("chrome");
             this.driver.get("https://practice-cybertekschool.herokuapp.com/");
             Thread.sleep(1000L);
@@ -32,7 +32,7 @@ public class PracticeTests_9_to12 {
             this.driver.findElement(By.linkText("200")).click();
             String exp = "This page returned a 200 status code.";
             String act = this.driver.findElement(By.xpath("//p")).getText();
-            Assert.assertEquals(exp, act);
+            Assert.assertTrue(exp.contains(act));
         }
 
         @Test
