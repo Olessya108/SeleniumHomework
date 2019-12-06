@@ -108,7 +108,7 @@ public class VyTrackLogin {
   Assert.assertTrue(two.isSelected());
 
     }
-
+@Test
     public void test6(){
 //Select “Testers meeting”
 // Verify that following data is displayed:
