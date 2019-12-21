@@ -6,10 +6,15 @@ import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import com.cbt.utilities.BrowserFactory;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+
+import java.util.List;
 
 /*Wiki assignment
 1. Go to https://www.wikipedia.org/
@@ -28,7 +33,7 @@ public class Wiki {
     WebDriver driver;
 
     @BeforeTest
-    public void setUp(){
+    public void setUp() {
         // initializing the classes
         report = new ExtentReports();
         // creating report path
@@ -55,13 +60,22 @@ public class Wiki {
         driver = BrowserFactory.getDriver("Chrome");
         extentLogger.info("Go to https://www.wikipedia.org/");
         driver.get(" https://www.wikipedia.org/");
-        extentLogger.info(" Enter redsox");
+        extentLogger.info("Enter redsox");
         driver.findElement(By.id("searchInput")).sendKeys("red sox");
         extentLogger.info("Wait until all the search suggestions load");
-        Thread.sleep(2000);
-       extentLogger.info("Verify that there are more that 1 search suggestions");
-        Assert.assertTrue( (driver.findElements(By.cssSelector("h3.suggestion-title")).size()) > 1 );
-        System.out.println( driver.findElements(By.cssSelector("h3.suggestion-title")).size());
+        WebDriverWait wait = new WebDriverWait(driver, 5);
+
+        List<WebElement> allResults = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector("#typeahead-suggestions p")));
+        extentLogger.info("number of suggestions = " + allResults.size());
+        WebElement firstResult = allResults.get(0);
+        extentLogger.info("Verifying first suggestion:" + firstResult.getText());
+        Assert.assertEquals(firstResult.getText(), "Boston");
+        Assert.assertFalse(firstResult.getText().isEmpty());
+        extentLogger.pass("PASSED");
+
+        extentLogger.info("Verify that there are more that 1 search suggestions");
+        Assert.assertTrue((driver.findElements(By.cssSelector("h3.suggestion-title")).size()) > 1);
+        System.out.println(driver.findElements(By.cssSelector("h3.suggestion-title")).size());
         extentLogger.info("Verify that first search suggestion starts with text Boston Red");
         String actualFirstSuggestion = driver.findElement(By.cssSelector("h3.suggestion-title")).getText();
         Assert.assertEquals("Boston Red Sox", actualFirstSuggestion);
@@ -73,7 +87,8 @@ public class Wiki {
     }
 
     @AfterTest
-    public void tearDownTest(){
+    public void tearDownTest() {
+
         report.flush();
     }
 
