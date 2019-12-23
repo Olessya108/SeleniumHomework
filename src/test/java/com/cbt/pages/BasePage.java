@@ -25,7 +25,9 @@ public abstract class BasePage {
     protected WebElement userName;
 
     public BasePage() {
+
         PageFactory.initElements(Driver.get(), this);
+
     }
 
 

@@ -5,7 +5,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
@@ -38,15 +37,13 @@ public class MedalTable {
         }
         System.out.println(sorted);
         Assert.assertTrue(sorted);
-//click on NOc
-        driver.findElement(By.linkText("NOC")).click();
+
+        //click on NOC
+        driver.findElement(By.xpath("//table[9]/thead/tr/th[2]")).click();
 
 
     }
 
 
-    @AfterMethod
-    public void tearDown() {
-        driver.close();
-    }
+//        driver.close();
 }
