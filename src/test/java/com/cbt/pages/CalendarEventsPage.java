@@ -42,8 +42,15 @@ public class CalendarEventsPage extends BasePage {
     public WebElement TitleOption;
 
 
+    @FindBy(css = "a[title='Cancel']")
+    public WebElement cancelButton;
+
+    @FindBy(xpath = "//h1[contains(text(),'All')] ")
+    public WebElement subtitle;
+
     public CalendarEventsPage() {
         PageFactory.initElements(Driver.get(), this);
     }
+
 
 }

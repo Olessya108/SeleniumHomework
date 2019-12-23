@@ -34,12 +34,28 @@ public class CreateCalendarEventsPage extends BasePage {
     public WebElement after;
     @FindBy(xpath = "(//input[@type='radio'])[5]")
     public WebElement by;
+    @FindBy(css = "a[class='btn-success btn dropdown-toggle']")
+    public WebElement saveAndCloseDropDownArrow;
+    @FindBy(css = "//li//button[normalize-space()='Save and Close']")
+    public WebElement saveAndCloseButton;
+    @FindBy(xpath = "//li//button[normalize-space()='Save and New']")
+    public WebElement saveAndNew;
+    @FindBy(xpath = "//li//button[normalize-space()='Save']")
+    public WebElement saveButton;
+    @FindBy(css = "div[class='loading-bar']")
+    public WebElement loadingMask;
+    @FindBy(xpath = "//li[(text()='9:00 AM')]")
+    public WebElement nineAmStartTime;
+    @FindBy(xpath = "time_selector_oro_calendar_event_form_end-uid-5e00010ecc3f1")
+    public WebElement meetingEndTime;
+
 
     public CreateCalendarEventsPage() {
         PageFactory.initElements(Driver.get(), this);
     }
 
-    public Select repeatOptionsList() {  //select class in html
+    public Select repeatOptionsList() {
+        //select class in html
         return new Select(repeatOptions);
     }
 
